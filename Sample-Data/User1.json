@@ -1,0 +1,9 @@
+{
+  "_id": "STFMUM00002",
+  "name": "Test User",
+  "email": "test@example.com",
+  "password": "$2a$11$Q5YbZc7guyU9jKjPQZTCXufYzPgD6w9FGx3pFTBJGdf4UlqB02rga", 
+  "role": "staff",
+  "trackingIDs": [],
+  "createdAt": { "$date": "2024-06-06T10:00:00Z" }
+}
