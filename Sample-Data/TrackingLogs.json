@@ -1,0 +1,38 @@
+[
+  {
+    "parcelId": "EP1013",
+    "status": "picked-up",
+    "location": "Patna Warehouse",
+    "timestamp": "2025-06-06T08:30:00Z"
+  },
+  {
+    "parcelId": "EP1013",
+    "status": "in-transit",
+    "location": "Varanasi",
+    "timestamp": "2025-06-06T12:00:00Z"
+  },
+  {
+    "parcelId": "EP1013",
+    "status": "in-transit",
+    "location": "Kanpur",
+    "timestamp": "2025-06-06T16:45:00Z"
+  },
+  {
+    "parcelId": "EP1013",
+    "status": "arrived at hub",
+    "location": "Delhi Distribution Center",
+    "timestamp": "2025-06-06T21:10:00Z"
+  },
+  {
+    "parcelId": "EP1013",
+    "status": "out-for-delivery",
+    "location": "Saket, Delhi",
+    "timestamp": "2025-06-07T08:00:00Z"
+  },
+  {
+    "parcelId": "EP1013",
+    "status": "delivered",
+    "location": "Saket, Delhi",
+    "timestamp": "2025-06-07T11:30:00Z"
+  }
+]
