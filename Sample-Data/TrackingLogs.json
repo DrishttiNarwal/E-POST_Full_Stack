@@ -1,38 +1,164 @@
 [
   {
+    "parcelId": "EP1001",
+    "status": "picked up",
+    "location": "Pune",
+    "timestamp": "2025-06-01T09:00:00Z"
+  },
+  {
+    "parcelId": "EP1001",
+    "status": "in-transit",
+    "location": "Mumbai",
+    "timestamp": "2025-06-02T12:00:00Z"
+  },
+  {
+    "parcelId": "EP1001",
+    "status": "delivered",
+    "location": "Mumbai",
+    "timestamp": "2025-06-03T18:00:00Z"
+  },
+
+  {
+    "parcelId": "EP1002",
+    "status": "picked up",
+    "location": "Noida",
+    "timestamp": "2025-06-01T10:00:00Z"
+  },
+  {
+    "parcelId": "EP1002",
+    "status": "in-transit",
+    "location": "Agra",
+    "timestamp": "2025-06-02T15:00:00Z"
+  },
+
+  {
+    "parcelId": "EP1003",
+    "status": "picked up",
+    "location": "Bangalore",
+    "timestamp": "2025-06-01T11:30:00Z"
+  },
+  {
+    "parcelId": "EP1003",
+    "status": "in-transit",
+    "location": "Hyderabad",
+    "timestamp": "2025-06-02T16:30:00Z"
+  },
+  {
+    "parcelId": "EP1003",
+    "status": "delivered",
+    "location": "Hyderabad",
+    "timestamp": "2025-06-03T14:00:00Z"
+  },
+
+  {
+    "parcelId": "EP1004",
+    "status": "picked up",
+    "location": "Gurgaon",
+    "timestamp": "2025-06-01T09:45:00Z"
+  },
+  {
+    "parcelId": "EP1004",
+    "status": "in-transit",
+    "location": "Delhi",
+    "timestamp": "2025-06-02T13:15:00Z"
+  },
+
+  {
+    "parcelId": "EP1005",
+    "status": "picked up",
+    "location": "Kolkata",
+    "timestamp": "2025-06-01T08:00:00Z"
+  },
+  {
+    "parcelId": "EP1005",
+    "status": "in-transit",
+    "location": "Howrah",
+    "timestamp": "2025-06-01T16:00:00Z"
+  },
+
+  {
+    "parcelId": "EP1006",
+    "status": "picked up",
+    "location": "Ahmedabad",
+    "timestamp": "2025-06-01T12:00:00Z"
+  },
+
+  {
+    "parcelId": "EP1007",
+    "status": "picked up",
+    "location": "Patna",
+    "timestamp": "2025-06-01T10:20:00Z"
+  },
+
+  {
+    "parcelId": "EP1008",
+    "status": "picked up",
+    "location": "Delhi",
+    "timestamp": "2025-06-01T09:30:00Z"
+  },
+  {
+    "parcelId": "EP1008",
+    "status": "in-transit",
+    "location": "Connaught Place",
+    "timestamp": "2025-06-02T11:00:00Z"
+  },
+  {
+    "parcelId": "EP1008",
+    "status": "delivered",
+    "location": "Delhi",
+    "timestamp": "2025-06-02T19:00:00Z"
+  },
+
+  {
+    "parcelId": "EP1009",
+    "status": "picked up",
+    "location": "Bangalore",
+    "timestamp": "2025-06-01T11:00:00Z"
+  },
+
+  {
+    "parcelId": "EP1010",
+    "status": "picked up",
+    "location": "Mumbai",
+    "timestamp": "2025-06-01T08:30:00Z"
+  },
+  {
+    "parcelId": "EP1010",
+    "status": "in-transit",
+    "location": "Thane",
+    "timestamp": "2025-06-02T14:00:00Z"
+  },
+
+  {
+    "parcelId": "EP1011",
+    "status": "picked up",
+    "location": "Ahmedabad",
+    "timestamp": "2025-06-01T07:45:00Z"
+  },
+  {
+    "parcelId": "EP1011",
+    "status": "in-transit",
+    "location": "Surat",
+    "timestamp": "2025-06-02T12:45:00Z"
+  },
+
+  {
+    "parcelId": "EP1012",
+    "status": "picked up",
+    "location": "Chennai",
+    "timestamp": "2025-06-01T10:30:00Z"
+  },
+
+  {
     "parcelId": "EP1013",
-    "status": "picked-up",
-    "location": "Patna Warehouse",
-    "timestamp": "2025-06-06T08:30:00Z"
+    "status": "picked up",
+    "location": "Patna",
+    "timestamp": "2025-06-01T09:15:00Z"
   },
   {
     "parcelId": "EP1013",
     "status": "in-transit",
     "location": "Varanasi",
-    "timestamp": "2025-06-06T12:00:00Z"
-  },
-  {
-    "parcelId": "EP1013",
-    "status": "in-transit",
-    "location": "Kanpur",
-    "timestamp": "2025-06-06T16:45:00Z"
-  },
-  {
-    "parcelId": "EP1013",
-    "status": "arrived at hub",
-    "location": "Delhi Distribution Center",
-    "timestamp": "2025-06-06T21:10:00Z"
-  },
-  {
-    "parcelId": "EP1013",
-    "status": "out-for-delivery",
-    "location": "Saket, Delhi",
-    "timestamp": "2025-06-07T08:00:00Z"
-  },
-  {
-    "parcelId": "EP1013",
-    "status": "delivered",
-    "location": "Saket, Delhi",
-    "timestamp": "2025-06-07T11:30:00Z"
+    "timestamp": "2025-06-02T17:10:00Z"
   }
 ]
