@@ -1,9 +1,22 @@
 import { useEffect, useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
-import { Badge } from "../ui/badge"
-import { Separator } from "../ui/separator"
-import { Package, MapPin, Calendar, Clock, Truck } from "lucide-react"
-import api from "../../lib/api"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
+import { Badge } from "../ui/badge";
+import { Separator } from "../ui/separator";
+import {
+  Package,
+  MapPin,
+  Calendar,
+  Clock,
+  Truck,
+} from "lucide-react";
+import api from "../../lib/api";
+import { ParcelQRCode } from "../tracking/ParcelQRCode"; // 👈 Make sure path is correct
 
 type TrackingResultProps = {
   parcel?: any;
@@ -22,7 +35,6 @@ export function TrackingResult({ parcel, loading, error }: TrackingResultProps) 
         try {
           const res = await api.get(`/parcels/track/${parcel._id}`);
           setTrackingLogs(res.data.trackingLogs || []);
-          console.log(res.data);
         } catch {
           setTrackingLogs([]);
         } finally {
@@ -51,19 +63,27 @@ export function TrackingResult({ parcel, loading, error }: TrackingResultProps) 
         <CardHeader>
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <CardTitle className="text-xl">Tracking Details: {parcel.trackingId}</CardTitle>
-              <CardDescription>Current status and delivery information</CardDescription>
+              <CardTitle className="text-xl">
+                Tracking Details: {parcel.trackingId}
+              </CardTitle>
+              <CardDescription>
+                Current status and delivery information
+              </CardDescription>
             </div>
             <Badge className="w-fit" variant="outline">
               {parcel.status}
             </Badge>
           </div>
         </CardHeader>
+
         <CardContent>
           <div className="grid gap-6 md:grid-cols-2">
+            {/* Left Box - Shipment Information */}
             <div className="space-y-4">
               <div>
-                <h3 className="text-sm font-medium text-muted-foreground mb-2">Shipment Information</h3>
+                <h3 className="text-sm font-medium text-muted-foreground mb-2">
+                  Shipment Information
+                </h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1">
                     <p className="text-xs text-muted-foreground">Sender Address</p>
@@ -93,42 +113,54 @@ export function TrackingResult({ parcel, loading, error }: TrackingResultProps) 
               </div>
               <Separator />
             </div>
-            <div>
-              <h3 className="text-sm font-medium text-muted-foreground mb-2">Tracking History</h3>
-              <div className="space-y-4">
-                {trackingLogs && trackingLogs.length > 0 ? (
-                  trackingLogs.map((event, index) => (
-                    <div key={index} className="relative pl-6 pb-4">
-                      {index !== trackingLogs.length - 1 && (
-                        <div className="absolute top-0 left-[11px] h-full w-[1px] bg-border"></div>
-                      )}
-                      <div className="absolute top-0 left-0 rounded-full">
-                        <Truck className="h-[22px] w-[22px] text-yellow-500" />
-                      </div>
-                      <div className="space-y-1">
-                        <div className="flex items-center justify-between">
-                          <p className="text-sm font-medium">{event.status}</p>
+
+            {/* Right Box - Tracking History & QR Code */}
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-sm font-medium text-muted-foreground mb-2">
+                  Tracking History
+                </h3>
+                <div className="space-y-4">
+                  {trackingLogs && trackingLogs.length > 0 ? (
+                    trackingLogs.map((event, index) => (
+                      <div key={index} className="relative pl-6 pb-4">
+                        {index !== trackingLogs.length - 1 && (
+                          <div className="absolute top-0 left-[11px] h-full w-[1px] bg-border"></div>
+                        )}
+                        <div className="absolute top-0 left-0 rounded-full">
+                          <Truck className="h-[22px] w-[22px] text-yellow-500" />
+                        </div>
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-between">
+                            <p className="text-sm font-medium">{event.status}</p>
+                            <div className="flex items-center text-xs text-muted-foreground">
+                              <Calendar className="mr-1 h-3 w-3" />
+                              {event.timestamp
+                                ? new Date(event.timestamp).toLocaleDateString()
+                                : ""}
+                              <Clock className="ml-2 mr-1 h-3 w-3" />
+                              {event.timestamp
+                                ? new Date(event.timestamp).toLocaleTimeString()
+                                : ""}
+                            </div>
+                          </div>
                           <div className="flex items-center text-xs text-muted-foreground">
-                            <Calendar className="mr-1 h-3 w-3" />
-                            {event.timestamp
-                              ? new Date(event.timestamp).toLocaleDateString()
-                              : ""}
-                            <Clock className="ml-2 mr-1 h-3 w-3" />
-                            {event.timestamp
-                              ? new Date(event.timestamp).toLocaleTimeString()
-                              : ""}
+                            <MapPin className="mr-1 h-3 w-3" />
+                            {event.location}
                           </div>
                         </div>
-                        <div className="flex items-center text-xs text-muted-foreground">
-                          <MapPin className="mr-1 h-3 w-3" />
-                          {event.location}
-                        </div>
                       </div>
-                    </div>
-                  ))
-                ) : (
-                  <div className="text-muted-foreground">No tracking history found.</div>
-                )}
+                    ))
+                  ) : (
+                    <div className="text-muted-foreground">No tracking history found.</div>
+                  )}
+                </div>
+              </div>
+
+              {/* 👇 QR Code Display Here */}
+              <div className="mt-6">
+                <h3 className="text-sm font-medium text-muted-foreground mb-2">Parcel QR Code</h3>
+                <ParcelQRCode trackingId={parcel.trackingId} />
               </div>
             </div>
           </div>
@@ -137,4 +169,3 @@ export function TrackingResult({ parcel, loading, error }: TrackingResultProps) 
     </div>
   );
 }
-

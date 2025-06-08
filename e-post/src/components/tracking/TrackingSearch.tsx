@@ -8,13 +8,15 @@ import { Label } from "../ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs"
 import { Search, QrCode } from "lucide-react"
 import { QrReader } from "react-qr-reader"
+import { ParcelQRCode } from "../tracking/ParcelQRCode" // ✅ make sure this path is correct
 
 type TrackingSearchProps = {
   onSearch: (trackingId: string) => void;
   loading?: boolean;
+  parcel?: any;
 };
 
-export function TrackingSearch({ onSearch, loading }: TrackingSearchProps) {
+export function TrackingSearch({ onSearch, loading, parcel }: TrackingSearchProps) {
   const [trackingId, setTrackingId] = useState("")
   const [isScanning, setIsScanning] = useState(false)
   const [activeTab, setActiveTab] = useState("tracking-id")
@@ -56,7 +58,9 @@ export function TrackingSearch({ onSearch, loading }: TrackingSearchProps) {
     <Card>
       <CardHeader>
         <CardTitle>Track Your Parcel</CardTitle>
-        <CardDescription>Enter your tracking number or scan QR code to track your parcel</CardDescription>
+        <CardDescription>
+          Enter your tracking number or scan QR code to track your parcel
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -64,6 +68,8 @@ export function TrackingSearch({ onSearch, loading }: TrackingSearchProps) {
             <TabsTrigger value="tracking-id">Tracking ID</TabsTrigger>
             <TabsTrigger value="qr-code">QR Code</TabsTrigger>
           </TabsList>
+
+          {/* --- Tracking ID Tab --- */}
           <TabsContent value="tracking-id" className="space-y-4">
             <div className="flex flex-col space-y-2">
               <Label htmlFor="tracking-id">Tracking ID</Label>
@@ -82,36 +88,43 @@ export function TrackingSearch({ onSearch, loading }: TrackingSearchProps) {
               </div>
             </div>
           </TabsContent>
+
+          {/* --- QR Code Tab --- */}
           <TabsContent value="qr-code" className="space-y-4">
             <div className="flex flex-col items-center space-y-4">
-              {isScanning ? (
-                <>
-                  <div className="w-full max-w-md aspect-square border-2 border-dashed rounded-md flex items-center justify-center">
-                    <QrReader
-                      scanDelay={300}
-                      onResult={handleScan}
-                      videoContainerStyle={{ width: "100%" }}
-                      constraints={{ facingMode: "environment" }}
-                    />
-                  </div>
-                  <Button type="button" className="mt-2" onClick={handleCancelScan}>
-                    Cancel
-                  </Button>
-                </>
-              ) : (
-                <div className="w-full max-w-md aspect-square border-2 border-dashed rounded-md flex items-center justify-center">
+
+              {/* This is the box where QR code will show or scanning will happen */}
+              <div className="w-full max-w-md aspect-square border-2 border-dashed rounded-md flex items-center justify-center p-4">
+                {isScanning ? (
+                  <QrReader
+                    scanDelay={300}
+                    onResult={handleScan}
+                    videoContainerStyle={{ width: "100%" }}
+                    constraints={{ facingMode: "environment" }}
+                  />
+                ) : parcel?.trackingId ? (
+                  <ParcelQRCode trackingId={parcel.trackingId} />
+                ) : (
                   <QrCode className="h-16 w-16 text-muted-foreground" />
-                </div>
+                )}
+              </div>
+
+              {/* Buttons below the box */}
+              {isScanning ? (
+                <Button type="button" className="mt-2" onClick={handleCancelScan}>
+                  Cancel
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => {
+                    setIsScanning(true)
+                    setActiveTab("qr-code")
+                  }}
+                  disabled={loading}
+                >
+                  Scan QR Code
+                </Button>
               )}
-              <Button
-                onClick={() => {
-                  setIsScanning(true)
-                  setActiveTab("qr-code")
-                }}
-                disabled={isScanning || loading}
-              >
-                {isScanning ? "Scanning..." : "Scan QR Code"}
-              </Button>
             </div>
           </TabsContent>
         </Tabs>
@@ -119,4 +132,3 @@ export function TrackingSearch({ onSearch, loading }: TrackingSearchProps) {
     </Card>
   )
 }
-
