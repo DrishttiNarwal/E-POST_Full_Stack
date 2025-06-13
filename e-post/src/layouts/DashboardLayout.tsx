@@ -1,31 +1,20 @@
-// import { Outlet } from "react-router-dom";
-// import { DashboardSidebar } from "../components/dashboard/DashboardSidebar";
-// import { DashboardHeader } from "../components/dashboard/DashboardHeader";
-
-// export default function DashboardLayout() {
-//   return (
-//     <div className="flex h-screen w-screen bg-[hsl(var(--background))] text-[hsl(var(--foreground))]">
-//       {/* Sidebar */}
-//       <DashboardSidebar />
-//       {/* Main Area */}
-//       <div className="flex flex-1 flex-col min-h-0 min-w-0 md:ml-64">
-//         <DashboardHeader />
-//         <main className="flex-1 p-4 md:p-6 overflow-auto min-w-0">
-//           <Outlet />
-//         </main>
-//       </div>
-//     </div>
-//   );
-// }
-//------------------------------------------------------------------------------------------------
-
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../components/auth-provider";
-import { LogOut, Package, Search, Home } from "lucide-react";
+import { LogOut, Package, Search, Home, User } from "lucide-react";
 import { Button } from "../components/ui/button";
+import { ModeToggle } from "../components/ModeToggle";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
 
 export default function DashboardLayout() {
-  const { logout } = useAuth();
+  const { logout, currentUser } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -34,9 +23,9 @@ export default function DashboardLayout() {
   };
 
   return (
-    <div className="flex h-screen w-screen bg-[hsl(var(--background))] text-[hsl(var(--foreground))]">
+    <div className="flex h-screen w-screen bg-background text-foreground">
       {/* Sidebar */}
-      <aside className="w-64 bg-gray-100 dark:bg-gray-900 p-6 shadow-md flex flex-col justify-between">
+      <aside className="w-64 bg-card p-6 shadow-md flex flex-col justify-between">
         {/* Header */}
         <div className="flex items-center gap-2 mb-8">
           <Package className="h-7 w-7 text-primary" />
@@ -89,7 +78,7 @@ export default function DashboardLayout() {
         </nav>
 
         {/* Logout */}
-        <div className="mt-8 border-t pt-4">
+        <div className="mt-8 border-t border-border pt-4">
           <Button
             variant="ghost"
             className="w-full justify-start text-muted-foreground hover:text-primary"
@@ -101,8 +90,47 @@ export default function DashboardLayout() {
         </div>
       </aside>
 
-      {/* Main Area */}
+      {/* Main Content Area */}
       <div className="flex flex-1 flex-col min-h-0 min-w-0">
+        {/* Top Header */}
+        <header className="flex items-center justify-end p-4 border-b border-border bg-background gap-4">
+          {/* Theme toggle to the left of profile */}
+          <ModeToggle />
+          
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="relative h-9 w-9 rounded-full">
+                <Avatar className="h-9 w-9">
+                  <AvatarImage src="/user.jpg" alt={currentUser?.name || "User"} />
+                  <AvatarFallback>
+                    {currentUser?.name
+                      ? currentUser.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")
+                          .toUpperCase()
+                      : "U"}
+                  </AvatarFallback>
+                </Avatar>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuLabel className="font-normal">
+                <div className="flex flex-col space-y-1">
+                  <p className="text-sm font-medium leading-none">{currentUser?.name || "User"}</p>
+                  <p className="text-xs leading-none text-muted-foreground">{currentUser?.email}</p>
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={handleLogout}>
+                <LogOut className="mr-2 h-4 w-4" />
+                Logout
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </header>
+
+        {/* Page Content */}
         <main className="flex-1 p-4 md:p-6 overflow-auto min-w-0">
           <Outlet />
         </main>
